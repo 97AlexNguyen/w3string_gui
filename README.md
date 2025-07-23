@@ -1,3 +1,6 @@
+![Logo1](https://github.com/97AlexNguyen/w3string_gui/blob/main/decode.png)
+![Logo1](https://github.com/97AlexNguyen/w3string_gui/blob/main/encode.png)
+![Logo1](https://github.com/97AlexNguyen/w3string_gui/blob/main/csv.png)
 Hi guys .I have enhanced some of these tools for personal use and now wish to share them with everyone. I hope they are useful to you.
 Git : https://github.com/97AlexNguyen/The-Witcher-3-Mod-manager/releases/tag/release-0.9.4-beta1
 **New Features:**
