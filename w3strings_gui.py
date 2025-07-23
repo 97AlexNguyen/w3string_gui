@@ -9,13 +9,15 @@ import platform
 import webbrowser
 import sv_ttk     
 import sys
+import re
+
 def get_exe_directory():
-    """Lấy thư mục chứa tệp exe thực sự"""
+    """Get the directory containing the actual exe file"""
     if getattr(sys, 'frozen', False):
-        # Khi chạy từ tệp exe được đóng gói
+        # When running from packaged exe
         return Path(sys.executable).parent
     else:
-        # Khi chạy từ Python script
+        # When running from Python script
         return Path(__file__).parent.resolve()
     
 
@@ -225,7 +227,6 @@ class  W3StringsGui:
             messagebox.showerror("Missing w3strings.exe", msg)
             webbrowser.open(LINK)
             self.root.destroy()
-            
             return
 
         # Selected files for each tab
@@ -284,7 +285,7 @@ class  W3StringsGui:
         
         # Drag & drop info
         if HAS_DND:
-            ttk.Label(decode_frame, text="💡 Tip: You can drag and drop files directly into the list", 
+            ttk.Label(decode_frame, text="Tip: You can drag and drop files directly into the list", 
                      foreground="green", font=("Arial", 11)).grid(row=2, column=0, columnspan=3, sticky=tk.W)
         
         # File operation buttons
@@ -369,7 +370,7 @@ class  W3StringsGui:
         
         # Drag & drop info
         if HAS_DND:
-            ttk.Label(encode_frame, text="💡 Tip: You can drag and drop files directly into the list", 
+            ttk.Label(encode_frame, text="Tip: You can drag and drop files directly into the list", 
                      foreground="green", font=("Arial", 10)).grid(row=2, column=0, columnspan=3, sticky=tk.W)
         
         # File operation buttons
@@ -437,7 +438,7 @@ class  W3StringsGui:
         
         # Configure grid
         csv_frame.columnconfigure(0, weight=1)
-        csv_frame.rowconfigure(4, weight=1)
+        csv_frame.rowconfigure(5, weight=1)
         
         # Split section
         split_frame = ttk.LabelFrame(csv_frame, text="Split CSV (ID/Key + Text)", padding="10")
@@ -445,12 +446,23 @@ class  W3StringsGui:
         split_frame.columnconfigure(1, weight=1)
         
         ttk.Label(split_frame, text="Split a CSV file into two separate files: ID/Key and Text").grid(
-            row=0, column=0, columnspan=2, sticky=tk.W, pady=(0, 5))
+            row=0, column=0, columnspan=3, sticky=tk.W, pady=(0, 5))
         ttk.Label(split_frame, text="Format: id|key(hex)|key(str)|text").grid(
-            row=1, column=0, columnspan=2, sticky=tk.W, pady=(0, 10))
+            row=1, column=0, columnspan=3, sticky=tk.W, pady=(0, 5))
+        
+        # Add numbering option
+        self.add_line_numbers_var = tk.BooleanVar(value=True)
+        ttk.Checkbutton(split_frame, text="📝 Add line numbers to text file (recommended)", 
+                       variable=self.add_line_numbers_var,
+                       command=self.update_split_info).grid(row=2, column=0, columnspan=3, sticky=tk.W, pady=(0, 10))
+        
+        # Info label that changes based on checkbox
+        self.split_info_label = ttk.Label(split_frame, text="", foreground="Green", font=("Arial", 10))
+        self.split_info_label.grid(row=3, column=0, columnspan=3, sticky=tk.W, pady=(0, 10))
+        self.update_split_info()  # Initialize the label
         
         ttk.Button(split_frame, text="🔪 Select CSV to Split", command=self.select_file_split, 
-                  width=30).grid(row=2, column=0, sticky=tk.W)
+                  width=30).grid(row=4, column=0, sticky=tk.W)
         
         # Merge section - Redesigned
         merge_frame = ttk.LabelFrame(csv_frame, text="Merge CSV (ID/Key + Text)", padding="10")
@@ -458,29 +470,40 @@ class  W3StringsGui:
         merge_frame.columnconfigure(1, weight=1)
         
         ttk.Label(merge_frame, text="Merge an ID/Key file and a Text file into a single complete CSV file").grid(
-            row=0, column=0, columnspan=3, sticky=tk.W, pady=(0, 10))
+            row=0, column=0, columnspan=3, sticky=tk.W, pady=(0, 5))
+        
+        # Smart merge option
+        self.smart_merge_var = tk.BooleanVar(value=True)
+        ttk.Checkbutton(merge_frame, text="🧠 Smart merge (auto-detect numbered lines)", 
+                       variable=self.smart_merge_var,
+                       command=self.update_merge_info).grid(row=1, column=0, columnspan=3, sticky=tk.W, pady=(0, 5))
+        
+        # Info label for merge
+        self.merge_info_label = ttk.Label(merge_frame, text="", foreground="Green", font=("Arial", 10))
+        self.merge_info_label.grid(row=2, column=0, columnspan=3, sticky=tk.W, pady=(0, 10))
+        self.update_merge_info()  # Initialize the label
         
         # ID/Key file selection
-        ttk.Label(merge_frame, text="ID/Key File:").grid(row=1, column=0, sticky=tk.W, padx=(0, 5))
+        ttk.Label(merge_frame, text="ID/Key File:").grid(row=3, column=0, sticky=tk.W, padx=(0, 5))
         self.idkey_entry = ttk.Entry(merge_frame, textvariable=self.merge_idkey_file, state="readonly")
-        self.idkey_entry.grid(row=1, column=1, sticky=(tk.W, tk.E), padx=(0, 5))
+        self.idkey_entry.grid(row=3, column=1, sticky=(tk.W, tk.E), padx=(0, 5))
         ttk.Button(merge_frame, text="📁 Browse", command=self.select_idkey_file, 
-                  width=10).grid(row=1, column=2, padx=(0, 5))
+                  width=10).grid(row=3, column=2, padx=(0, 5))
         ttk.Button(merge_frame, text="❌", command=self.clear_idkey_file, 
-                  width=3).grid(row=1, column=3)
+                  width=3).grid(row=3, column=3)
         
         # Text file selection
-        ttk.Label(merge_frame, text="Text File:").grid(row=2, column=0, sticky=tk.W, padx=(0, 5), pady=(5, 0))
+        ttk.Label(merge_frame, text="Text File:").grid(row=4, column=0, sticky=tk.W, padx=(0, 5), pady=(5, 0))
         self.text_entry = ttk.Entry(merge_frame, textvariable=self.merge_text_file, state="readonly")
-        self.text_entry.grid(row=2, column=1, sticky=(tk.W, tk.E), padx=(0, 5), pady=(5, 0))
+        self.text_entry.grid(row=4, column=1, sticky=(tk.W, tk.E), padx=(0, 5), pady=(5, 0))
         ttk.Button(merge_frame, text="📁 Browse", command=self.select_text_file, 
-                  width=10).grid(row=2, column=2, padx=(0, 5), pady=(5, 0))
+                  width=10).grid(row=4, column=2, padx=(0, 5), pady=(5, 0))
         ttk.Button(merge_frame, text="❌", command=self.clear_text_file, 
-                  width=3).grid(row=2, column=3, pady=(5, 0))
+                  width=3).grid(row=4, column=3, pady=(5, 0))
         
         # Merge button
         merge_button_frame = ttk.Frame(merge_frame)
-        merge_button_frame.grid(row=3, column=0, columnspan=4, pady=(10, 0))
+        merge_button_frame.grid(row=5, column=0, columnspan=4, pady=(10, 0))
         
         self.merge_button = ttk.Button(merge_button_frame, text="🔗 Merge Files", 
                                      command=self.merge_selected_files, state="disabled")
@@ -496,13 +519,13 @@ class  W3StringsGui:
         
         info_text = """
             Recommended workflow:
-            1. Decode .w3strings file to CSV
-            2. Use Split to separate the CSV into two files: ID/Key and Text
-            3. Edit/translate the Text file (keeping the line count the same)
-            4. Select the ID/Key and Text files, then Merge to combine them
-            5. Encode the CSV back to a .w3strings file
+            1. Decode .w3strings files to CSV
+            2. Use Split to separate CSV into two files: ID/Key and Text (with line numbers)
+            3. Edit/translate the Text file (keep line count and order unchanged)
+            4. Select ID/Key and Text files, then Merge to combine them
+            5. Encode CSV back to .w3strings
 
-            Note: You must keep the same number of lines when editing the Text file!
+            Note: You must keep the line count unchanged when editing the Text file!
         """
         
         ttk.Label(info_frame, text=info_text.strip(), justify=tk.LEFT, 
@@ -514,6 +537,20 @@ class  W3StringsGui:
         
         self.csv_output_text = scrolledtext.ScrolledText(csv_frame, height=8, wrap=tk.WORD)
         self.csv_output_text.grid(row=4, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        
+    def update_split_info(self):
+        """Update split info label based on checkbox"""
+        if self.add_line_numbers_var.get():
+            self.split_info_label.config(text="Text will be numbered: '1:Text content', '2:Text content', ...")
+        else:
+            self.split_info_label.config(text="Text will be saved as-is without line numbers")
+    
+    def update_merge_info(self):
+        """Update merge info label based on checkbox"""
+        if self.smart_merge_var.get():
+            self.merge_info_label.config(text="Auto-detect and handle numbered lines (1:, 2:, ...)")
+        else:
+            self.merge_info_label.config(text="Directly merge each line without handling line numbers")
         
     # Drag & Drop methods
     def on_drop_decode(self, event):
@@ -775,7 +812,7 @@ class  W3StringsGui:
         else:
             messagebox.showwarning("Warning", "No output folder yet!")
         
-    # CSV Tools methods
+    # CSV Tools methods with line numbering feature
     def split_csv(self, filepath):
         try:
             with open(filepath, encoding='utf-8') as f:
@@ -798,17 +835,30 @@ class  W3StringsGui:
             
             base_name = os.path.splitext(filepath)[0]
             idkey_path = base_name + "_idkey.csv"
-            text_path = base_name + "_text.txt"
             
+            # Create text file name based on numbering option
+            if self.add_line_numbers_var.get():
+                text_path = base_name + "_text_numbered.txt"
+            else:
+                text_path = base_name + "_text.txt"
+            
+            # Save ID/Key file
             with open(idkey_path, 'w', encoding='utf-8') as f1:
                 for meta in meta_lines:
                     f1.write(meta)
                 for line in ids_keys:
                     f1.write(line + '\n')
             
+            # Save Text file with or without numbering
             with open(text_path, 'w', encoding='utf-8') as f2:
-                for text in texts:
-                    f2.write(text + '\n')
+                if self.add_line_numbers_var.get():
+                    # Add line numbers to each line
+                    for i, text in enumerate(texts, 1):
+                        f2.write(f"{i}:{text}\n")
+                else:
+                    # Save as-is
+                    for text in texts:
+                        f2.write(text + '\n')
             
             # Enable open folder button and store output folder
             self.csv_last_output_folder = os.path.dirname(filepath)
@@ -817,6 +867,8 @@ class  W3StringsGui:
             self.log_output(f"✓ Split successful!", self.csv_output_text)
             self.log_output(f"ID/Key file: {idkey_path}", self.csv_output_text)
             self.log_output(f"Text file: {text_path}", self.csv_output_text)
+            if self.add_line_numbers_var.get():
+                self.log_output(f"Text has been numbered", self.csv_output_text)
             messagebox.showinfo("Success", f"File split successfully!\nSaved:\n{idkey_path}\n{text_path}")
             
         except Exception as e:
@@ -833,7 +885,34 @@ class  W3StringsGui:
             data_lines = [line for line in lines if not line.startswith(';')]
             
             with open(text_file, encoding='utf-8') as f2:
-                texts = [line.rstrip('\n\r') for line in f2.readlines()]
+                text_lines = [line.rstrip('\n\r') for line in f2.readlines()]
+            
+            texts = []
+            
+            if self.smart_merge_var.get():
+                # Smart merge: Auto-detect and handle line numbers
+                self.log_output("🧠 Using smart merge - detecting line number format", self.csv_output_text)
+                
+                numbered_count = 0
+                for line in text_lines:
+                    # Check if line starts with number:
+                    match = re.match(r'^(\d+):(.*)', line)
+                    if match:
+                        numbered_count += 1
+                        # Get content after ":":
+                        texts.append(match.group(2))
+                    else:
+                        # If no line number, keep as-is
+                        texts.append(line)
+                
+                if numbered_count > 0:
+                    self.log_output(f"✓ Detected {numbered_count}/{len(text_lines)} numbered lines", self.csv_output_text)
+                else:
+                    self.log_output("ℹ No numbered lines detected, treating as plain text", self.csv_output_text)
+            else:
+                # Simple merge: Direct merge
+                self.log_output("📝 Using simple merge - not handling line numbers", self.csv_output_text)
+                texts = text_lines
             
             if len(data_lines) != len(texts):
                 error_msg = f"Line count mismatch: ID/Key has {len(data_lines)} lines, Text has {len(texts)} lines"
