@@ -1,3 +1,6 @@
+Nexus page : https://www.nexusmods.com/witcher3/mods/11059?tab=posts
+
+
 ![Logo1](https://github.com/97AlexNguyen/w3string_gui/blob/main/decode.png)
 ![Logo1](https://github.com/97AlexNguyen/w3string_gui/blob/main/encode.png)
 ![Logo1](https://github.com/97AlexNguyen/w3string_gui/blob/main/csv.png)
