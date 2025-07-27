@@ -15,7 +15,7 @@ Git : https://github.com/97AlexNguyen/The-Witcher-3-Mod-manager/releases/tag/rel
 - Support for installing additional files, such as .ini, .dll, and more.
 - An improved menu installation system that creates automatic checkpoints for game menus before any mod overwrites them. This ensures that uninstalling a mod will restore the menu to its original state.
 
-https://github.com/97AlexNguyen/w3string_gui/releases/tag/0.0.0.1
+https://github.com/97AlexNguyen/w3string_gui
 - An integrated companion tool for working with .w3strings files, featuring:
   - Encoding and decoding of .w3strings.
   - Splitting CSVs by ID and merging them back together.
