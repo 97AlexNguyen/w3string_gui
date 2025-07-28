@@ -1096,8 +1096,6 @@ w3string_gui
 │       │       ├── tkfbox.tcl
 │       │       ├── unsupported.tcl
 │       │       └── xmfbox.tcl
-│       ├── w3strings_tool
-│       │   └── w3strings.exe
 │       ├── frozen_application_license.txt
 │       ├── python312.dll
 │       ├── W3StringsGUI.exe
@@ -1136,4 +1134,5 @@ w3string_gui
 ├── README.md
 ├── setup.py
 ├── w3strings_gui.py
-└── w3strings_gui_old.py
+├── w3strings_gui_old.py
+└── What is this.md

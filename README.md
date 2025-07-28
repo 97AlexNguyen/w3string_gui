@@ -1,23 +1,113 @@
-Nexus page : https://www.nexusmods.com/witcher3/mods/11059?tab=posts
+🧰 W3StringsGUI - Advanced Tool for Witcher 3 Modding
+W3StringsGUI is an advanced graphical tool specifically designed for modders and translators working with .w3strings files in The Witcher 3. These files contain all the in-game text such as quests, UI, dialogue, and more.
 
+Instead of using complex command-line tools, this app provides a modern UI with dedicated tabs for each task.
 
-![Logo1](https://github.com/97AlexNguyen/w3string_gui/blob/main/decode.png)
-![Logo1](https://github.com/97AlexNguyen/w3string_gui/blob/main/encode.png)
-![Logo1](https://github.com/97AlexNguyen/w3string_gui/blob/main/csv.png)
-Hi guys .I have enhanced some of these tools for personal use and now wish to share them with everyone. I hope they are useful to you.
-Git : https://github.com/97AlexNguyen/The-Witcher-3-Mod-manager
-**New Features:**
-- A redesigned menu section.
-- The ability to sort and group mods by category for better organization.
-- Automatic category extraction from Nexus Mods, which assigns each mod to its appropriate group. Support both : API and web scrap.
-- An added mod summary display that allows users to quickly see what each mod does.
-**ToDo:**
-- Support for installing additional files, such as .ini, .dll, and more.
-- An improved menu installation system that creates automatic checkpoints for game menus before any mod overwrites them. This ensures that uninstalling a mod will restore the menu to its original state.
+✨ Key Features
+🔓 Decode Tab - Decode Files
+Decode multiple .w3strings files into CSV at once
 
-https://github.com/97AlexNguyen/w3string_gui
-- An integrated companion tool for working with .w3strings files, featuring:
-  - Encoding and decoding of .w3strings.
-  - Splitting CSVs by ID and merging them back together.
-  - A design specifically aimed at enabling mod translation via AI. Users can extract lines based on ID, send them to an AI like ChatGPT for translation, and then merge them back, making mod localization much more efficient.
+Supports drag-and-drop directly into the interface
 
+Verbose option to show detailed processing logs
+
+Context menu for each file (open, copy path, remove from list)
+
+🔒 Encode Tab - Encode Files
+Encode multiple CSV files into .w3strings
+
+ID Space option for custom mods
+
+Force ignore ID space check for special cases
+
+Multiple verbosity levels (None, Verbose, Very Verbose)
+
+🛠️ CSV Tools Tab - Advanced CSV Utilities
+🔪 Advanced Split - 5 Powerful Splitting Modes:
+🔄 Basic Split: Traditional split into ID/Key + Text
+
+🔢 By ID Range: Split by numeric ID ranges (great for team collaboration)
+
+Split by number of entries (e.g., 500 entries per file)
+
+Limit max number of output files
+
+Separate handling of numeric vs. text-based IDs
+
+📏 By Text Length: Split by text length
+
+Separate long/short texts with a customizable threshold
+
+Useful for prioritizing complex translations
+
+📊 By Count: Evenly split by number of entries
+
+Balanced workload distribution
+
+Automatically calculates required file count
+
+🔍 By Pattern: Split by regex pattern
+
+Filter content (e.g., dialogues vs UI text)
+
+Supports case sensitivity toggle
+
+Example patterns: dialog|quest, ^Hello
+
+🔗 Priority-based Merge - Merge with Priority Handling
+Merge one ID/Key file with multiple Text files
+
+Priority System: Higher-priority files override lower ones when IDs conflict
+
+Auto-detect format: Recognizes both ID:content and ID|content
+
+Conflict resolution: Automatically handles duplicate IDs based on order
+
+Move Up/Down: Easily reorder files to adjust priority
+
+🎯 Advanced Team Workflow
+Basic Workflow:
+Decode .w3strings → CSV
+
+Split CSV with preferred method
+
+Distribute files to translation team
+
+Merge translated files with priority system
+
+Encode back to .w3strings
+
+Professional Team Workflow:
+By ID Range: Split by game area (each person gets a region)
+
+By Text Length: Experts handle longer texts, newcomers handle shorter ones
+
+By Pattern: Split by content type (dialogue, UI, quest descriptions)
+
+Priority Merge: Lead translator has highest priority to review and override
+
+🔧 Technical Features
+User Interface:
+Drag & Drop powered by tkinterdnd2
+
+Scrollable interface for CSV Tools tab
+
+Real-time feedback with detailed output logs
+
+File Handling:
+Batch processing for multiple files simultaneously
+
+Robust error handling with clear feedback
+
+Output folder tracking for quick access to results
+
+🚀 Advantages Over Old Tools
+Team collaboration: Multiple split modes designed for team efficiency
+
+Conflict management: Auto conflict resolution via priority handling
+
+Flexible splitting: 5 splitting modes to match all use cases
+
+Professional workflow: Complete pipeline from split → distribute → merge with control
+
+User-friendly: Drag & drop, context menus, tooltips, real-time output

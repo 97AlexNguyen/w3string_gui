@@ -16,6 +16,7 @@ from src.core.constants import *
 from src.core.utils import get_w3strings_path, check_drag_drop_support
 from src.gui.widgets import MissingExeDialog
 from src.gui.tabs import DecodeTab, EncodeTab, CSVToolsTab
+from src.gui.tabs.info_tab import InfoTab
 
 
 class W3StringsGUI:
@@ -38,10 +39,9 @@ class W3StringsGUI:
                 self.root = tk.Tk()
                 print("✓ Created new standard root window")
             
-        self.setup_window()
         self.check_dependencies()
-        
         if self.validate_w3strings_exe():
+            self.setup_window()
             self.create_widgets()
         else:
             self.show_missing_exe_dialog()
@@ -103,6 +103,7 @@ class W3StringsGUI:
         
         # CSV Tools tab
         self.csv_tools_tab = CSVToolsTab(self.root, self.notebook)
+        self.info_tab = InfoTab(self.root, self.notebook)
         
         print("✓ All tabs created successfully")
         

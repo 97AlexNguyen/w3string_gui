@@ -5,7 +5,7 @@ Dialog for missing w3strings.exe file
 import tkinter as tk
 from tkinter import ttk
 
-from ..core.utils import copy_to_clipboard, open_web_link
+from ..core.utils import copy_to_clipboard
 
 
 class MissingExeDialog:
@@ -46,9 +46,6 @@ class MissingExeDialog:
         btn_frame = ttk.Frame(self.dlg)
         btn_frame.pack(pady=10)
 
-        # Buttons
-        ttk.Button(btn_frame, text="🌐 Open link", 
-                   command=self.open_link).pack(side="left", padx=5)
         ttk.Button(btn_frame, text="📋 Copy link", 
                    command=self.copy_link).pack(side="left", padx=5)
         ttk.Button(btn_frame, text="Close", 
@@ -60,10 +57,6 @@ class MissingExeDialog:
             # Show brief confirmation
             self.dlg.title("Link copied!")
             self.dlg.after(1000, lambda: self.dlg.title("Missing w3strings.exe"))
-
-    def open_link(self):
-        """Open download link in browser"""
-        open_web_link(self.link)
         
     def close_dialog(self):
         """Close dialog and exit application"""

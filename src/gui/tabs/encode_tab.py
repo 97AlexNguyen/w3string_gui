@@ -30,7 +30,7 @@ class EncodeTab(BaseTab):
     def create_tab(self, notebook):
         """Create the encode tab UI"""
         self.frame = ttk.Frame(notebook, padding="10")
-        notebook.add(self.frame, text=f"{EMOJI_ENCODE} Encode CSV")
+        notebook.add(self.frame, text=f"{EMOJI_ENCODE}Encode CSV")
         
         # File selection section
         listbox_frame = self.create_file_selection_section(
@@ -76,11 +76,11 @@ class EncodeTab(BaseTab):
         button_frame = ttk.Frame(self.frame)
         button_frame.grid(row=3, column=0, columnspan=3, pady=(5, 10), sticky=tk.W)
         
-        ttk.Button(button_frame, text=f"{EMOJI_FOLDER} Add CSV Files", 
+        ttk.Button(button_frame, text=f"{EMOJI_FOLDER}Add CSV Files", 
                   command=self.add_files).pack(side=tk.LEFT, padx=(0, 5))
-        ttk.Button(button_frame, text=f"{EMOJI_CLEAR} Clear", 
+        ttk.Button(button_frame, text=f"{EMOJI_CLEAR}Clear", 
                   command=self.clear_files).pack(side=tk.LEFT, padx=(0, 5))
-        ttk.Button(button_frame, text=f"{EMOJI_REMOVE} Remove Selected", 
+        ttk.Button(button_frame, text=f"{EMOJI_REMOVE}Remove Selected", 
                   command=self.remove_selected_files).pack(side=tk.LEFT)
         
     def create_options(self):
@@ -118,10 +118,10 @@ class EncodeTab(BaseTab):
         action_frame = ttk.Frame(self.frame)
         action_frame.grid(row=5, column=0, columnspan=3, pady=(0, 10), sticky=tk.W)
         
-        ttk.Button(action_frame, text=f"{EMOJI_ENCODE} Encode Files", 
+        ttk.Button(action_frame, text=f"{EMOJI_ENCODE}Encode Files", 
                   command=self.encode_files, style="Accent.TButton").pack(side=tk.LEFT, padx=(0, 10))
                   
-        self.open_folder_btn = ttk.Button(action_frame, text=f"{EMOJI_FOLDER} Open Output Folder", 
+        self.open_folder_btn = ttk.Button(action_frame, text=f"{EMOJI_FOLDER}Open Output Folder", 
                                          command=self.open_output_folder, state="disabled")
         self.open_folder_btn.pack(side=tk.LEFT)
         

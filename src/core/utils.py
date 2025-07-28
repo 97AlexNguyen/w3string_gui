@@ -6,7 +6,6 @@ import os
 import sys
 import platform
 import subprocess
-import webbrowser
 from pathlib import Path
 from tkinter import messagebox
 
@@ -82,14 +81,6 @@ def open_file_with_system(file_path):
             subprocess.run(['xdg-open', file_path])
     except Exception as e:
         messagebox.showerror("Error", f"Could not open file: {str(e)}")
-
-
-def open_web_link(url):
-    """Open URL in default web browser"""
-    try:
-        webbrowser.open(url)
-    except Exception as e:
-        messagebox.showerror("Error", f"Could not open link: {str(e)}")
 
 
 def copy_to_clipboard(root, text):

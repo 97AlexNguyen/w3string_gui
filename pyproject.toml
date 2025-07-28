@@ -1,0 +1,39 @@
+# -----------------------------
+# pyproject.toml (cleaned)
+# -----------------------------
+
+[build-system]
+requires = ["setuptools>=61", "wheel", "cx-Freeze"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "w3strings-gui"
+version = "0.1.0"
+description = "GUI for decoding and encoding Witcher 3 .w3strings files."
+authors = [{ name = "Vincent", email = "97nguyenvuquocan@gmail.com" }]
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "sv-ttk",
+    "toml; python_version < '3.11'",   # Only needed when tomllib not available
+    "tkinterdnd2>=0.3.0; sys_platform == 'win32'"
+]
+
+[project.urls]
+Homepage   = "https://github.com/97AlexNguyen/w3string_gui"
+Repository = "https://github.com/97AlexNguyen/w3string_gui"
+
+# ---------------------------------------------------------------------
+# Custom metadata consumed by the application (InfoTab)
+# ---------------------------------------------------------------------
+[tool.w3strings_gui]
+repository = "https://github.com/97AlexNguyen/w3string_gui"
+author     = "Vincent"
+contact    = "97nguyenvuquocan@gmail.com"
+credits    = """\
+Thank you to:
+- CD Projekt Red
+- Nexus Mods community
+- rmemr for w3strings encoder tool
+"""

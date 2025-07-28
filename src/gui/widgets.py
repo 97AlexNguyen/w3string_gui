@@ -157,9 +157,6 @@ class MissingExeDialog:
 
         btn_frame = ttk.Frame(self.dlg)
         btn_frame.pack(pady=10)
-
-        ttk.Button(btn_frame, text="🌐 Open link", 
-                   command=self.open_link).pack(side="left", padx=5)
         ttk.Button(btn_frame, text="📋 Copy link", 
                    command=self.copy_link).pack(side="left", padx=5)
         ttk.Button(btn_frame, text="Close", 
@@ -167,10 +164,6 @@ class MissingExeDialog:
 
     def copy_link(self):
         copy_to_clipboard(self.dlg, self.link)
-
-    def open_link(self):
-        from src.core.utils import open_web_link
-        open_web_link(self.link)
         
     def close_dialog(self):
         self.dlg.destroy()

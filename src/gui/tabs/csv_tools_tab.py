@@ -105,17 +105,17 @@ class CSVToolsTab:
         self.split_mode_var = tk.StringVar(value="basic")
         
         # Row 1: 3 buttons (Basic, ID Range, Text Length)
-        ttk.Radiobutton(mode_frame, text="🔄 Basic Split", variable=self.split_mode_var, 
+        ttk.Radiobutton(mode_frame, text="Basic Split", variable=self.split_mode_var, 
                     value="basic", command=self.on_split_mode_change).grid(row=0, column=0, sticky=tk.W, padx=(0, 5))
-        ttk.Radiobutton(mode_frame, text="🔢 By ID Range", variable=self.split_mode_var, 
+        ttk.Radiobutton(mode_frame, text="By ID Range", variable=self.split_mode_var, 
                     value="by_id_range", command=self.on_split_mode_change).grid(row=0, column=1, sticky=tk.W, padx=(0, 5))
-        ttk.Radiobutton(mode_frame, text="📏 By Text Length", variable=self.split_mode_var, 
+        ttk.Radiobutton(mode_frame, text="By Text Length", variable=self.split_mode_var, 
                     value="by_text_length", command=self.on_split_mode_change).grid(row=0, column=2, sticky=tk.W)
         
-        # Row 2: 2 buttons (Count, Pattern) - căn giữa
-        ttk.Radiobutton(mode_frame, text="📊 By Count", variable=self.split_mode_var, 
+        # Row 2: 2 buttons (Count, Pattern)
+        ttk.Radiobutton(mode_frame, text="By Count", variable=self.split_mode_var, 
                     value="by_count", command=self.on_split_mode_change).grid(row=1, column=0, sticky=tk.W, padx=(0, 5), pady=(5, 0))
-        ttk.Radiobutton(mode_frame, text="🔍 By Pattern", variable=self.split_mode_var, 
+        ttk.Radiobutton(mode_frame, text="By Pattern", variable=self.split_mode_var, 
                     value="by_pattern", command=self.on_split_mode_change).grid(row=1, column=1, sticky=tk.W, padx=(0, 5), pady=(5, 0))
 
         # Parameters frame (dynamic based on mode)
@@ -234,9 +234,9 @@ class CSVToolsTab:
         idkey_btn_frame = ttk.Frame(idkey_display_frame)
         idkey_btn_frame.grid(row=0, column=1, sticky=tk.E)
 
-        ttk.Button(idkey_btn_frame, text=f"{EMOJI_FOLDER} Select", 
+        ttk.Button(idkey_btn_frame, text=f"Select", 
                   command=self.select_idkey_file, width=10).pack(side=tk.LEFT, padx=(0, 2))
-        ttk.Button(idkey_btn_frame, text=f"{EMOJI_CLEAR} Clear", 
+        ttk.Button(idkey_btn_frame, text=f"Clear", 
                   command=self.clear_idkey_file, width=8).pack(side=tk.LEFT)
 
         # Multiple text files section
@@ -247,7 +247,7 @@ class CSVToolsTab:
 
         # Priority info
         priority_info = ttk.Label(text_section, 
-                                text="📋 Priority: The file above has higher priority when handling duplicate IDs", 
+                                text="Priority: The file above has higher priority when handling duplicate IDs", 
                                 foreground=TIPS_TEXT_COLOR, font=TIPS_TEXT_FONT)
         priority_info.grid(row=0, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 5))
         
@@ -272,20 +272,20 @@ class CSVToolsTab:
         text_btn_row1 = ttk.Frame(text_btn_frame)
         text_btn_row1.pack(fill=tk.X, pady=(0, 3))
 
-        ttk.Button(text_btn_row1, text=f"{EMOJI_FOLDER} Add", 
+        ttk.Button(text_btn_row1, text=f"Add", 
                   command=self.add_text_files, width=10).pack(side=tk.LEFT, padx=(0, 3))
-        ttk.Button(text_btn_row1, text=f"{EMOJI_REMOVE} Remove", 
+        ttk.Button(text_btn_row1, text=f"Remove", 
                   command=self.remove_text_file, width=8).pack(side=tk.LEFT, padx=(0, 3))
-        ttk.Button(text_btn_row1, text=f"{EMOJI_CLEAR} Clear", 
+        ttk.Button(text_btn_row1, text=f"Clear", 
                   command=self.clear_text_files, width=10).pack(side=tk.LEFT)
 
         # Row 2: Priority control buttons
         text_btn_row2 = ttk.Frame(text_btn_frame)
         text_btn_row2.pack(fill=tk.X)
 
-        ttk.Button(text_btn_row2, text="🔼 Up", 
+        ttk.Button(text_btn_row2, text="Up", 
                   command=self.move_text_up, width=8).pack(side=tk.LEFT, padx=(0, 3))
-        ttk.Button(text_btn_row2, text="🔽 Down", 
+        ttk.Button(text_btn_row2, text="Down", 
                   command=self.move_text_down, width=8).pack(side=tk.LEFT)
         
         # Info label for merge
@@ -297,11 +297,11 @@ class CSVToolsTab:
         merge_button_frame = ttk.Frame(merge_frame)
         merge_button_frame.grid(row=5, column=0, columnspan=4, pady=(10, 0))
 
-        self.merge_button = ttk.Button(merge_button_frame, text=f"{EMOJI_MERGE} Merge Files", 
+        self.merge_button = ttk.Button(merge_button_frame, text=f"Merge Files", 
                                      command=self.merge_selected_files, state="disabled")
         self.merge_button.pack(side=tk.LEFT, padx=(0, 10))
 
-        self.open_folder_btn = ttk.Button(merge_button_frame, text=f"{EMOJI_FOLDER} Open Output Folder", 
+        self.open_folder_btn = ttk.Button(merge_button_frame, text=f"Open Output Folder", 
                                          command=self.open_output_folder, state="disabled")
         self.open_folder_btn.pack(side=tk.LEFT)
         
@@ -414,7 +414,7 @@ class CSVToolsTab:
             
             # Clear output and start splitting
             self.output_text.delete(1.0, tk.END)
-            log_message(self.output_text, f"🔄 Starting {mode} split for: {os.path.basename(file_path)}")
+            log_message(self.output_text, f"Starting {mode} split for: {os.path.basename(file_path)}")
             
             success, files, output_folder = self.csv_processor.split_csv_advanced(
                 file_path, mode, params, self.add_line_numbers_var.get())
@@ -519,13 +519,13 @@ class CSVToolsTab:
             return
             
         self.output_text.delete(1.0, tk.END)
-        log_message(self.output_text, f"📋 ID/Key file: {os.path.basename(self.idkey_file)}")
+        log_message(self.output_text, f"ID/Key file: {os.path.basename(self.idkey_file)}")
         
-        log_message(self.output_text, f"📋 Text files list (by priority):")
+        log_message(self.output_text, f"Text files list (by priority):")
         for i, f in enumerate(self.text_files):
             log_message(self.output_text, f"  [{i+1}] {os.path.basename(f)}")
             
-        log_message(self.output_text, "🔄 Starting merge with priority order...")
+        log_message(self.output_text, "Starting merge with priority order...")
         
         success, output_file, output_folder = self.csv_processor.merge_csv_with_priority(
             [self.idkey_file], self.text_files,
